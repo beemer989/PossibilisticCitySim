@@ -13,12 +13,15 @@ public class IncrementPay : MonoBehaviour
   private void OnTriggerEnter(Collider other)
   {
     agent = other.gameObject.GetComponent<Student>();
-
-    if(agent.paidToday == false && agent.jobPosition == employeeType)
+    if(agent != null)
     {
-      agent.money += dailyPay;
-      agent.paidToday = true;
+      if (agent.paidToday == false && agent.jobPosition == employeeType)
+      {
+        agent.money += dailyPay;
+        agent.paidToday = true;
+      }
     }
+    
   }
 
 }

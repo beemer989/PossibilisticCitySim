@@ -4,7 +4,7 @@ using UnityEngine;
 using FluidHTN;
 using System;
 
-public class ResetHunger : MonoBehaviour
+public class ResetHungerAtHome : MonoBehaviour
 {
 
   private Student student;
@@ -16,7 +16,8 @@ public class ResetHunger : MonoBehaviour
     {
       student = other.gameObject.GetComponent<Student>();
       agent = other.gameObject.GetComponent<NPCAgent>();
-      if (student.ctx.GetState(AIWorldState.isHungry) == 1 && agent.foodDecision == 1)
+      var agentHomeEntrance = student.Agent.homePosition.parent.name + "Entrance";
+      if (student.ctx.GetState(AIWorldState.isHungry) == 1 && agentHomeEntrance == this.name)
       {
         student.ctx.SetState(AIWorldState.isHungry, false, EffectType.Permanent);
 

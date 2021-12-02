@@ -9,21 +9,30 @@ public class TurnOffStudentCollis : MonoBehaviour
   private Collider studCollider;
   private void OnTriggerEnter(Collider other)
   {
-    studCollider = other.gameObject.GetComponent<Collider>();
-    studCollider.gameObject.layer = 8;
-    studCollider.attachedRigidbody.gameObject.layer = 8;
+    var tempStudent = other.GetComponent<Student>();
+    if(tempStudent != null) 
+    { 
+      studCollider = other.gameObject.GetComponent<Collider>();
+      studCollider.gameObject.layer = 8;
+      studCollider.attachedRigidbody.gameObject.layer = 8;
 
-    agent = other.gameObject.GetComponent<NavMeshAgent>();
-    agent.radius = 0.05f;
+      agent = other.gameObject.GetComponent<NavMeshAgent>();
+      agent.radius = 0.05f;
+    }
+    
   }
 
   private void OnTriggerExit(Collider other)
   {
-    studCollider = other.gameObject.GetComponent<Collider>();
-    studCollider.gameObject.layer = 9;
-    studCollider.attachedRigidbody.gameObject.layer = 9;
+    var tempStudent = other.GetComponent<Student>();
+    if (tempStudent != null)
+    {
+      studCollider = other.gameObject.GetComponent<Collider>();
+      studCollider.gameObject.layer = 9;
+      studCollider.attachedRigidbody.gameObject.layer = 9;
 
-    agent = other.gameObject.GetComponent<NavMeshAgent>();
-    agent.radius = 0.5f;
+      agent = other.gameObject.GetComponent<NavMeshAgent>();
+      agent.radius = 0.5f;
+    }
   }
 }

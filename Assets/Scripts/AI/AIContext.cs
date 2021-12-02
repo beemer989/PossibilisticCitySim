@@ -31,9 +31,11 @@ public class AIContext : BaseContext
   public override bool LogDecomposition { get; } = true;
   public override byte[] WorldState => _worldState;
 
-  public int money = 0;
   public int timeOfDay;
   public int dayOfWeek;
+
+  public int money = 0;
+  public bool readyForActivity = true;
 
   public bool Done { get; set; } = false;
 
@@ -106,5 +108,10 @@ public class AIContext : BaseContext
         return true;
     }
     return false;
+  }
+
+  public bool ReadyForActivity(bool readyForActivity)
+  {
+    return readyForActivity;
   }
 }

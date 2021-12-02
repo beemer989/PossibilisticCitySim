@@ -35,6 +35,7 @@ public class RegisterBeingOccupied : MonoBehaviour
           student.ctx.SetState(AIWorldState.occupied, false, EffectType.Permanent);
           student.ctx.SetState(AIWorldState.wantToSpendMoney, false, EffectType.Permanent);
           student.money -= cost;
+          student.readyForActivity = false;
           hasEntered = false;
           timePassed = 0;
         }
@@ -47,6 +48,7 @@ public class RegisterBeingOccupied : MonoBehaviour
           student.ctx.SetState(AIWorldState.occupied, false, EffectType.Permanent);
           student.ctx.SetState(AIWorldState.wantToSpendMoney, false, EffectType.Permanent);
           student.money -= cost;
+          student.readyForActivity = false;
           hasEntered = false;
         }
       }
@@ -54,7 +56,7 @@ public class RegisterBeingOccupied : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-      if(hasEntered == false && student.ctx.GetState(AIWorldState.wantToSpendMoney) == 1)
+      if (hasEntered == false && student.ctx.GetState(AIWorldState.wantToSpendMoney) == 1)
       {
         switch (other.tag)
         {

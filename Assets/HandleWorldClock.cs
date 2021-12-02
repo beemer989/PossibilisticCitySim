@@ -16,8 +16,9 @@ public class HandleWorldClock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      Debug.Log("HELLO: TIME: " + world.time);
-      Debug.Log("HELLO: DAY: " + world.day);
-      currText.text = "Day:" + world.day + "\tTime: " + world.time;
+      currText.text = "Day:" + world.day + "\tTime: " + world.time + "\n\n";
+      currText.text += "Bar Traffic:" + world.barTraffic + "\n\n";
+      currText.text += "Bowl Traffic:" + world.bowlingTraffic + "\n\n";
+      currText.text += "Game Traffic:" + world.gameTraffic + "\n\n";
     }
 }

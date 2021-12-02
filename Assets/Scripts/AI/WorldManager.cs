@@ -13,13 +13,22 @@ public class WorldManager : MonoBehaviour
   float timePassed = 0f;
 
   GameObject[] nightlights;
+  GameObject[] heatMapCells;
+  GameObject[] locationCells;
 
   GameObject[] people;
   Student person;
 
+  public float barTraffic = 0;
+  public float gameTraffic = 0;
+  public float bowlingTraffic = 0;
+
+
   private void Start()
   {
     nightlights = GameObject.FindGameObjectsWithTag("spotlight");
+    heatMapCells = GameObject.FindGameObjectsWithTag("HeatMapCell");
+    locationCells = GameObject.FindGameObjectsWithTag("LocationCell");
     time = 3;
     day = 1;
   }
@@ -40,6 +49,20 @@ public class WorldManager : MonoBehaviour
           Debug.Log("2nd hour");
           sun.transform.eulerAngles = new Vector3(-75, sun.transform.rotation[1], sun.transform.rotation[2]);
           time = 2;
+          foreach (GameObject cell in heatMapCells)
+          {
+            HeatMapCounter temp = cell.GetComponent<HeatMapCounter>();
+            var scaleChange = new Vector3(0f, 0f, 100f * temp.interactionCount);
+            cell.transform.localScale -= scaleChange;
+            temp.interactionCount = 0;
+          }
+          foreach (GameObject cell in locationCells)
+          {
+            HeatMapCounter temp = cell.GetComponent<HeatMapCounter>();
+            var scaleChange = new Vector3(0f, 0f, 100f * temp.interactionCount);
+            cell.transform.localScale -= scaleChange;
+            temp.interactionCount = 0;
+          }
           break;
         case 2:
           Debug.Log("3rd hour");
@@ -165,36 +188,36 @@ public class WorldManager : MonoBehaviour
             person.paidToday = false;
           }
           sun.transform.eulerAngles = new Vector3(255, sun.transform.rotation[1], sun.transform.rotation[2]);
-
           switch (day)
           {
             case 1:
-              Debug.Log("Sunday");
+              Debug.Log("Monday");
               day = 2;
               break;
             case 2:
-              Debug.Log("Monday");
+              Debug.Log("Tuesday");
               day = 3;
               break;
             case 3:
-              Debug.Log("Tuesday");
+              Debug.Log("Wednesday");
               day = 4;
               break;
             case 4:
-              Debug.Log("Wednesday");
+              Debug.Log("Thursday");
               day = 5;
               break;
             case 5:
-              Debug.Log("Thursday");
+              Debug.Log("Friday");
               day = 6;
               break;
             case 6:
-              Debug.Log("Friday");
+              Debug.Log("Saturday");
               day = 7;
               break;
             case 7:
-              Debug.Log("Saturday");
+              Debug.Log("Sunday");
               day = 1;
+              Application.Quit();
               break;
             default:
               break;
@@ -205,6 +228,249 @@ public class WorldManager : MonoBehaviour
           break;
       }
       timePassed = 0f;
+      HandleTrafficVolumes();
+    }
+  }
+
+
+  public void HandleTrafficVolumes()
+  {
+    Debug.Log("SETTING TRAFFIC");
+    switch (day)
+    {
+      case 1:
+        Debug.Log("Monday");
+        if (time >= 12 && time < 16)
+        {
+          barTraffic = 0.2f;
+          bowlingTraffic = 0.3f;
+          gameTraffic = 0;
+        }
+        else if (time >= 16 && time < 19)
+        {
+          barTraffic = 0.5f;
+          bowlingTraffic = 0.5f;
+          gameTraffic = 0;
+        }
+        else if (time >= 19 && time < 21)
+        {
+          barTraffic = 0.8f;
+          bowlingTraffic = 0.7f;
+          gameTraffic = 0;
+        }
+        else if (time >= 21 && time < 25)
+        {
+          barTraffic = 0.4f;
+          bowlingTraffic = 0.2f;
+          gameTraffic = 0;
+        }
+        else if (time >= 0 && time < 12) // set them all to 2 to outweigh anything so no one wants to go to any of them during these hours
+        {
+          barTraffic = 2;
+          bowlingTraffic = 2;
+          gameTraffic = 2;
+        }
+        break;
+      case 2:
+        Debug.Log("Tuesday");
+        if (time >= 12 && time < 16)
+        {
+          barTraffic = 0.3f;
+          bowlingTraffic = 0.4f;
+          gameTraffic = 0.3f;
+        }
+        else if (time >= 16 && time < 19)
+        {
+          barTraffic = 0.6f;
+          bowlingTraffic = 0.6f;
+          gameTraffic = 0.5f;
+        }
+        else if (time >= 19 && time < 21)
+        {
+          barTraffic = 0.8f;
+          bowlingTraffic = 0.7f;
+          gameTraffic = 0.7f;
+        }
+        else if (time >= 21 && time < 25)
+        {
+          barTraffic = 0.5f;
+          bowlingTraffic = 0.3f;
+          gameTraffic = 0.7f;
+        }
+        else if (time >= 0 && time < 12) // set them all to 2 to outweigh anything so no one wants to go to any of them during these hours
+        {
+          barTraffic = 2;
+          bowlingTraffic = 2;
+          gameTraffic = 2;
+        }
+        break;
+      case 3:
+        Debug.Log("Wednesday");
+        if (time >= 12 && time < 16)
+        {
+          barTraffic = 0.4f;
+          bowlingTraffic = 0.3f;
+          gameTraffic = 0;
+        }
+        else if (time >= 16 && time < 19)
+        {
+          barTraffic = 0.6f;
+          bowlingTraffic = 0.4f;
+          gameTraffic = 0;
+        }
+        else if (time >= 19 && time < 21)
+        {
+          barTraffic = 0.85f;
+          bowlingTraffic = 0.5f;
+          gameTraffic = 0;
+        }
+        else if (time >= 21 && time < 25)
+        {
+          barTraffic = 0.5f;
+          bowlingTraffic = 0.1f;
+          gameTraffic = 0;
+        }
+        else if (time >= 0 && time < 12) // set them all to 2 to outweigh anything so no one wants to go to any of them during these hours
+        {
+          barTraffic = 2;
+          bowlingTraffic = 2;
+          gameTraffic = 2;
+        }
+        break;
+      case 4:
+        Debug.Log("Thursday");
+        if (time >= 12 && time < 16)
+        {
+          barTraffic = 0.2f;
+          bowlingTraffic = 0.2f;
+          gameTraffic = 0.3f;
+        }
+        else if (time >= 16 && time < 19)
+        {
+          barTraffic = 0.6f;
+          bowlingTraffic = 0.5f;
+          gameTraffic = 0.5f;
+        }
+        else if (time >= 19 && time < 21)
+        {
+          barTraffic = 0.7f;
+          bowlingTraffic = 0.9f;
+          gameTraffic = 0.8f;
+        }
+        else if (time >= 21 && time < 25)
+        {
+          barTraffic = 0.4f;
+          bowlingTraffic = 0.6f;
+          gameTraffic = 0.7f;
+        }
+        else if (time >= 0 && time < 12) // set them all to 2 to outweigh anything so no one wants to go to any of them during these hours
+        {
+          barTraffic = 2;
+          bowlingTraffic = 2;
+          gameTraffic = 2;
+        }
+        break;
+      case 5:
+        Debug.Log("Friday");
+        if (time >= 12 && time < 16)
+        {
+          barTraffic = 0.2f;
+          bowlingTraffic = 0.2f;
+          gameTraffic = 0;
+        }
+        else if (time >= 16 && time < 19)
+        {
+          barTraffic = 0.6f;
+          bowlingTraffic = 0.5f;
+          gameTraffic = 0;
+        }
+        else if (time >= 19 && time < 21)
+        {
+          barTraffic = 0.7f;
+          bowlingTraffic = 0.9f;
+          gameTraffic = 0;
+        }
+        else if (time >= 21 && time < 25)
+        {
+          barTraffic = 0.4f;
+          bowlingTraffic = 0.6f;
+          gameTraffic = 0;
+        }
+        else if (time >= 0 && time < 12) // set them all to 2 to outweigh anything so no one wants to go to any of them during these hours
+        {
+          barTraffic = 2;
+          bowlingTraffic = 2;
+          gameTraffic = 2;
+        }
+        break;
+      case 6:
+        Debug.Log("Saturday");
+        if (time >= 12 && time < 16)
+        {
+          barTraffic = 0.4f;
+          bowlingTraffic = 0.4f;
+          gameTraffic = 0.8f;
+        }
+        else if (time >= 16 && time < 19)
+        {
+          barTraffic = 0.6f;
+          bowlingTraffic = 0.6f;
+          gameTraffic = 0.9f;
+        }
+        else if (time >= 19 && time < 21)
+        {
+          barTraffic = 0.7f;
+          bowlingTraffic = 0.7f;
+          gameTraffic = 0.8f;
+        }
+        else if (time >= 21 && time < 25)
+        {
+          barTraffic = 0.6f;
+          bowlingTraffic = 0.6f;
+          gameTraffic = 0.6f;
+        }
+        else if (time >= 0 && time < 12) // set them all to 2 to outweigh anything so no one wants to go to any of them during these hours
+        {
+          barTraffic = 2;
+          bowlingTraffic = 2;
+          gameTraffic = 2;
+        }
+        break;
+      case 7:
+        Debug.Log("Sunday");
+        if (time >= 12 && time < 16)
+        {
+          barTraffic = 0.3f;
+          bowlingTraffic = 0.3f;
+          gameTraffic = 0;
+        }
+        else if (time >= 16 && time < 19)
+        {
+          barTraffic = 0.5f;
+          bowlingTraffic = 0.5f;
+          gameTraffic = 0;
+        }
+        else if (time >= 19 && time < 21)
+        {
+          barTraffic = 0.6f;
+          bowlingTraffic = 0.6f;
+          gameTraffic = 0;
+        }
+        else if (time >= 21 && time < 25)
+        {
+          barTraffic = 0.5f;
+          bowlingTraffic = 0.5f;
+          gameTraffic = 0;
+        }
+        else if (time >= 0 && time < 12) // set them all to 2 to outweigh anything so no one wants to go to any of them during these hours
+        {
+          barTraffic = 2;
+          bowlingTraffic = 2;
+          gameTraffic = 2;
+        }
+        break;
+      default:
+        break;
     }
   }
 }

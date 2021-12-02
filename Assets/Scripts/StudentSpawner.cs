@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class StudentSpawner : MonoBehaviour
 {
-  // Start is called before the first frame update
   GameObject[] possibleHomes;
   GameObject[] possibleWorkplaces;
   GameObject[] possibleSchoolBuildings;
@@ -32,9 +31,11 @@ public class StudentSpawner : MonoBehaviour
 
     var rnd = new System.Random(DateTime.Now.Millisecond);
 
+
+    // ADD MORE TIMES (OR FIGURE OUT WAYS TO MIX THEM) FOR MORE VARIATION
     possibleWorkSchoolTimes.Add(Tuple.Create(Tuple.Create(8, 13), Tuple.Create(14, 16)));
     possibleWorkSchoolTimes.Add(Tuple.Create(Tuple.Create(9, 17), Tuple.Create(18, 20)));
-    possibleWorkSchoolTimes.Add(Tuple.Create(Tuple.Create(12, 17), Tuple.Create(8, 10)));
+    possibleWorkSchoolTimes.Add(Tuple.Create(Tuple.Create(11, 15), Tuple.Create(8, 10)));
     possibleWorkSchoolTimes.Add(Tuple.Create(Tuple.Create(14, 21), Tuple.Create(11, 13)));
 
     if(PlayerPrefs.HasKey("NumOfStudents"))
@@ -79,6 +80,7 @@ public class StudentSpawner : MonoBehaviour
       instStudentRef.hungerRate = rnd.Next(1, 4);
       instAgentRef.cheapActivityIndex = rnd.Next(0, 2);
       instStudentRef.worldManager = worldManager;
+      new WaitForSeconds(.01f);
     }
   }
 }

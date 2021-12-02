@@ -89,12 +89,12 @@ public static class Actions
     return TaskStatus.Success;
   }
 
-  public static TaskStatus GoingtoSportsBar(AIContext context)
+  public static TaskStatus GoToCheapActivity(AIContext context)
   {
-    if(context.IsTodayInDays(new int[] { 3 }))
+    if (context.IsTodayInDays(new int[] { 3 }))
     {
       context.Agent.navMeshAgent.SetDestination(context.Agent.SportsBar.transform.position);
-      /*Debug.Log("go to sports bar");*/
+      Debug.Log("go to sports bar");
     }
     else
     {
@@ -102,20 +102,29 @@ public static class Actions
       {
         case 0:
           context.Agent.navMeshAgent.SetDestination(context.Agent.SportsBar.transform.position);
-          /*Debug.Log("go to sports bar");*/
+          Debug.Log("go to sports bar");
           break;
         case 1:
           context.Agent.navMeshAgent.SetDestination(context.Agent.BowlingAlley.transform.position);
-          /*Debug.Log("go to bowling alley");*/
+          Debug.Log("go to bowling alley");
           break;
         default:
           break;
       }
     }
-    
+
+
+    return TaskStatus.Success;
+  }
+
+  public static TaskStatus GoingtoSportsBar(AIContext context)
+  {
+    context.Agent.navMeshAgent.SetDestination(context.Agent.SportsBar.transform.position);
+    /*Debug.Log("go to sports bar");*/
     
     return TaskStatus.Success;
   }
+
   public static TaskStatus GoToStadium(AIContext context)
   {
     context.Agent.navMeshAgent.SetDestination(context.Agent.Stadium.transform.position);

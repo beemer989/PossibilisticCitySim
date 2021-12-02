@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class StudentSelector : MonoBehaviour
 {
   GameObject studentSelectGO;
-  Dropdown studentSelector;
+  public Dropdown studentSelector;
   public Text studentInfo;
   float timePassed = 0;
 
@@ -19,14 +19,12 @@ public class StudentSelector : MonoBehaviour
 
   public GameObject studentMarker;
 
-  // Start is called before the first frame update
   void Start()
   {
     studentSelectGO = GameObject.FindGameObjectWithTag("StudentSelector");
     studentSelector = studentSelectGO.GetComponent<Dropdown>();
   }
 
-  // Update is called once per frame
   void Update()
   {
     timePassed += Time.deltaTime;
@@ -60,11 +58,17 @@ public class StudentSelector : MonoBehaviour
       var schoolChoice = students[studentSelector.value].Agent.schoolPosition.name;
       schoolChoice = schoolChoice.Replace(tempEnt, "");
 
+
       var studentHome = "Home: " + homeChoice + "\n\tBedtime: " + students[studentSelector.value].sleepStart + "\n\tWake Up: " + students[studentSelector.value].sleepEnd + "\n\n";
       var studentWork = "Work: " + workChoice + "\n\tStart: " + students[studentSelector.value].workStart + "\n\tEnd: " + students[studentSelector.value].workEnd + "\n\n";
       var studentSchool = "School: " + schoolChoice + "\n\tStart: " + students[studentSelector.value].schoolStart + "\n\tEnd: " + students[studentSelector.value].schoolEnd + "\n\n";
 
-      studentInfo.text = studentInfoStart + studentHunger + studentMoney + studentHome + studentWork + studentSchool;
+      var studentBarPref = "Bar Pref: " + students[studentSelector.value].dispBarPref + "\n\n";
+      var studentBowlPref = "Bowl Pref: " + students[studentSelector.value].dispBowlingPref + "\n\n";
+      var studentGamePref = "Game Pref: " + students[studentSelector.value].dispGamePref + "\n\n";
+      var studentHomePref = "Home Pref: " + students[studentSelector.value].dispHomePref + "\n\n";
+
+      studentInfo.text = studentInfoStart + studentHunger + studentMoney + studentHome + studentWork + studentSchool + studentBarPref + studentBowlPref + studentGamePref + studentHomePref;
       studentMarker.transform.position = students[studentSelector.value].transform.position;
     }
   }
